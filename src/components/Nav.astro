@@ -86,14 +86,18 @@ const { githubStars, xFollowers } = Astro.props as Props;
     if (!navContainer) return;
 
     const isAtTop = window.scrollY <= 10;
+    const viewportWidth =
+      window.innerWidth || document.documentElement.clientWidth;
 
     // Always keep nav centered
     navContainer.classList.add("mx-auto");
 
-    if (isAtTop) {
+    if (isAtTop || viewportWidth < 1024) {
+      // At the top OR on small screens, always full width
       navContainer.style.width = "100%";
       if (nameLogo) nameLogo.style.display = "block";
     } else {
+      // Large screens & scrolled
       navContainer.style.width = "1000px"; // 6xl ≈ 72rem (≈1000px)
       if (nameLogo) nameLogo.style.display = "none";
     }
@@ -113,8 +117,9 @@ const { githubStars, xFollowers } = Astro.props as Props;
       navContainer.style.width = "100%";
     }
 
-    // Add scroll event listener
+    // Add scroll and resize event listeners
     window.addEventListener("scroll", handleScroll);
+    window.addEventListener("resize", handleScroll);
 
     // Call once on load to set initial state
     handleScroll();
