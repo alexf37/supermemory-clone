@@ -1,0 +1,23 @@
+---
+import "../global.css";
+import { Font } from "astro:assets";
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    <title>supermemory™ clone</title>
+    <meta
+      name="description"
+      content="The universal memory API for the AI era. Stop building retrieval from scratch. Personalise LLMs for your users. Built for developers who ship."
+    />
+    <Font cssVariable="--font-space-grotesk" preload />
+  </head>
+  <body class="bg-background">
+    <slot />
+  </body>
+</html>

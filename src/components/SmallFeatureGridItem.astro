@@ -1,0 +1,53 @@
+---
+type BaseProps = {
+  title: string;
+  subtitle: string;
+  description: string;
+  imageSrc: string;
+  imageAlt: string;
+};
+type Props =
+  | BaseProps
+  | (BaseProps & {
+      secondImageSrc: string;
+      secondImageAlt: string;
+    });
+
+const props = Astro.props as Props;
+---
+
+<div class="more-features-item-clip-path p-px bg-zinc-200">
+  <div class="bg-white more-features-item-clip-path h-full p-12 space-y-12">
+    <div class="flex justify-between items-center">
+      <img
+        src={props.imageSrc}
+        alt={props.imageAlt}
+        loading="lazy"
+        class="w-18"
+      />
+      {
+        "secondImageSrc" in props && (
+          <img
+            src={props.secondImageSrc}
+            alt={props.secondImageAlt}
+            loading="lazy"
+          />
+        )
+      }
+    </div>
+    <div class="space-y-4 lg:space-y-6">
+      <div class="text-zinc-500 uppercase text-xs font-light">
+        {props.subtitle}
+      </div>
+      <h4
+        class="text-black text-[28px] lg:text-[32px] lg:font-medium tracking-tighter font-normal leading-7"
+      >
+        {props.title}
+      </h4>
+      <p
+        class="text-zinc-500 tracking-tight leading-5 font-light"
+        set:html={props.description}
+      />
+    </div>
+  </div>
+</div>

@@ -1,0 +1,97 @@
+---
+import hljs from "highlight.js/lib/core";
+import javascript from "highlight.js/lib/languages/javascript";
+
+hljs.registerLanguage("javascript", javascript);
+
+interface Props {
+  code: string;
+  language?: string;
+  theme?: "dark" | "light";
+  colors?: {
+    background?: string;
+    text?: string;
+    keyword?: string;
+    variable?: string;
+    class?: string;
+    string?: string;
+    comment?: string;
+  };
+}
+
+function getHighlightedCode(source: string, lang: string): string {
+  try {
+    return hljs.highlight(source, { language: lang }).value;
+  } catch (e) {
+    return hljs.highlightAuto(source).value;
+  }
+}
+
+const {
+  code,
+  language = "javascript",
+  theme = "dark",
+  colors = {},
+} = Astro.props as Props;
+
+const highlighted = getHighlightedCode(code, language);
+
+const darkTheme = {
+  text: "#ffffff",
+  keyword: "rgb(244, 114, 182)", // pink-400
+  variable: "rgb(96, 165, 250)", // blue-400
+  class: "rgb(196, 181, 253)", // purple-400
+  string: "rgb(74, 222, 128)", // green-400
+  comment: "rgb(156, 163, 175)", // gray-400
+};
+
+const lightTheme = {
+  text: "rgb(17, 24, 39)", // gray-900
+  keyword: "rgb(190, 24, 93)", // pink-700
+  variable: "rgb(29, 78, 216)", // blue-700
+  class: "rgb(109, 40, 217)", // purple-700
+  string: "rgb(21, 128, 61)", // green-700
+  comment: "rgb(75, 85, 99)", // gray-600
+};
+
+const activeTheme = theme === "light" ? lightTheme : darkTheme;
+const finalColors = { ...activeTheme, ...colors };
+---
+
+<pre
+  class="overflow-x-auto"
+  style={`background-color: ${finalColors.background}; color: ${finalColors.text};`}><code set:html={highlighted} /></pre>
+
+<style define:vars={finalColors} is:global>
+  .hljs {
+    color: var(--text);
+  }
+
+  .hljs-keyword {
+    color: var(--keyword);
+  }
+
+  .hljs-variable,
+  .hljs-title,
+  .hljs-attr,
+  .hljs-property {
+    color: var(--variable);
+  }
+
+  .hljs-class,
+  .hljs-className,
+  .hljs-built_in,
+  .hljs-type {
+    color: var(--class);
+  }
+
+  .hljs-string {
+    color: var(--string);
+  }
+
+  .hljs-comment,
+  .hljs-quote {
+    color: var(--comment);
+    font-style: italic;
+  }
+</style>

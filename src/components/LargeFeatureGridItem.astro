@@ -1,0 +1,56 @@
+---
+type Props = {
+  title: string;
+  subtitle: string;
+  description: string;
+  imageSrc: string;
+  imageAlt: string;
+  graphLabel: string;
+  graphSrc: string;
+  graphAlt: string;
+};
+
+const props = Astro.props as Props;
+---
+
+<div class="features-item-clip-path p-px col-span-2 bg-zinc-200">
+  <div
+    class="bg-white features-item-clip-path h-full p-8 lg:p-12 gap-8 grid grid-cols-2"
+  >
+    <div class="space-y-6 flex flex-col lg:justify-between lg:space-y-12">
+      <div class="flex justify-between items-center">
+        <img
+          src={props.imageSrc}
+          alt={props.imageAlt}
+          loading="lazy"
+          class="w-18"
+        />
+      </div>
+      <div class="space-y-4 lg:space-y-6">
+        <div class="text-zinc-500 uppercase text-xs font-light">
+          {props.subtitle}
+        </div>
+        <h4
+          class="text-black text-[28px] lg:text-[32px] lg:font-medium lg:max-w-56 tracking-tighter font-normal leading-7"
+        >
+          {props.title}
+        </h4>
+        <p class="text-zinc-500 tracking-tight leading-5 font-light">
+          {props.description}
+        </p>
+      </div>
+    </div>
+    <div class="space-y-4 text-center">
+      <div
+        class="text-zinc-500 uppercase text-xs font-light"
+        set:html={props.graphLabel}
+      />
+      <img
+        src={props.graphSrc}
+        alt={props.graphLabel}
+        loading="lazy"
+        class="w-full"
+      />
+    </div>
+  </div>
+</div>

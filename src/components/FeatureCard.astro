@@ -1,0 +1,68 @@
+---
+import logoBorder from "../assets/logo-border.svg";
+type Props = {
+  number: string;
+  title: string;
+  subtitle: string;
+  description: string;
+};
+
+const { number, title, subtitle, description }: Props = Astro.props;
+const uniqueId = crypto.randomUUID();
+---
+
+<div
+  id={uniqueId}
+  data-muted="true"
+  class="features-item group features-item-clip-path py-px pr-px data-[muted=true]:bg-zinc-200"
+>
+  <div
+    class="py-8 px-10 gap-8 lg:gap-16 flex flex-col lg:py-22 lg:px-10 lg:items-end lg:flex-row bg-white transition-colors duration-300 features-item-clip-path group-data-[muted=true]:bg-zinc-100"
+  >
+    <div class="flex items-center gap-10">
+      <div
+        class="text-3xl transition-colors duration-300 font-medium group-data-[muted=true]:text-zinc-400"
+      >
+        {number}
+      </div>
+      <img src={logoBorder.src} alt="" />
+      <div class="space-y-2 max-w-80">
+        <div
+          class="text-zinc-500 uppercase text-xs font-light whitespace-nowrap"
+        >
+          {subtitle}
+        </div>
+        <h4
+          class="text-black lg:text-[32px] transition-colors duration-300 group-data-[muted=true]:text-zinc-400 text-[28px] tracking-tighter font-normal leading-7"
+          set:html={title}
+        />
+      </div>
+    </div>
+    <p class="max-w-[400px] tracking-tight leading-5 font-light">
+      {description}
+    </p>
+  </div>
+</div>
+
+<script is:inline define:vars={{ uniqueId }}>
+  function updateMutedState() {
+    const element = document.getElementById(uniqueId);
+    if (!element) return;
+
+    const rect = element.getBoundingClientRect();
+    const viewportHeight = window.innerHeight;
+    const showThreshold = (4 * viewportHeight) / 5;
+    const hideThreshold = (1 * viewportHeight) / 4;
+
+    const shouldBeVisible =
+      rect.bottom < showThreshold && rect.bottom > hideThreshold;
+
+    element.setAttribute("data-muted", shouldBeVisible ? "false" : "true");
+  }
+
+  window.addEventListener("scroll", updateMutedState);
+
+  window.addEventListener("resize", updateMutedState);
+
+  updateMutedState();
+</script>

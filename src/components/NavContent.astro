@@ -1,0 +1,50 @@
+---
+import github from "../assets/logos/github.svg";
+import x from "../assets/logos/twitter.svg";
+type Props = {
+  githubStars: number;
+  xFollowers: number;
+};
+const { githubStars, xFollowers } = Astro.props as Props;
+const githubStarsFormatted =
+  githubStars > 1000 ? `${(githubStars / 1000).toFixed(1)}K` : githubStars;
+const xFollowersFormatted =
+  xFollowers > 1000 ? `${(xFollowers / 1000).toFixed(1)}K` : xFollowers;
+---
+
+<div
+  class="w-full flex flex-col font-light lg:flex-row lg:items-center lg:justify-between gap-4 text-white"
+>
+  <div class="flex flex-col lg:flex-row gap-4 lg:gap-6 mb-4 lg:mb-0">
+    <a href="/">Blog </a>
+    <a href="/">Docs </a>
+    <a href="/">Pricing </a>
+  </div>
+  <div class="flex flex-col lg:flex-row gap-6">
+    <div class="flex items-center gap-4 text-xs">
+      <div class="flex items-center gap-2">
+        <img src={github.src} alt="Github" class="size-3" />
+        <a href="/"> {githubStarsFormatted} </a>
+      </div>
+      <div class="flex items-center gap-2">
+        <img src={x.src} alt="X" class="size-3" />
+        <a href="/"> {xFollowersFormatted} </a>
+      </div>
+    </div>
+    <a
+      class="p-0.5 whitespace-nowrap group text-white w-full md:w-fit rounded-2xl gradient-button-wrapper bg-card"
+      href="/"
+    >
+      <div
+        class="rounded-[14px] p-1 bg-gradient-to-b from-zinc-800 to-zinc-900/90"
+      >
+        <div
+          class="rounded-[10px] font-light text-base flex gap-8 group-hover:bg-black transition-colors duration-300 py-2 px-4 bg-card shadow-[0_0_10px_rgba(0,0,0,0.4)]"
+        >
+          <span>Get supermemory <sup class="text-[0.5rem] -top-1">TM</sup></span
+          >
+        </div>
+      </div>
+    </a>
+  </div>
+</div>
