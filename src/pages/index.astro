@@ -232,7 +232,8 @@ const xFollowers = 4100;
         <img src={heroGradient.src} alt="hero-gradient" />
         <div class="flex flex-col gap-10 pb-4">
           <h1
-            class="text-[5rem] leading-20 max-w-4xl tracking-tighter text-white font-medium"
+            id="hero-title"
+            class="text-[5rem] leading-20 max-w-4xl tracking-tighter text-white font-medium opacity-0 translate-y-8 transition-all duration-700"
           >
             The universal memory API for the AI era
           </h1>
@@ -264,6 +265,19 @@ const xFollowers = 4100;
           </div>
         </div>
       </div>
+
+      <script is:inline>
+        if (typeof window !== "undefined") {
+          function animateHeroTitle() {
+            const heroTitle = document.getElementById("hero-title");
+            if (heroTitle) {
+              heroTitle.classList.remove("opacity-0", "translate-y-8");
+            }
+          }
+
+          window.requestAnimationFrame(animateHeroTitle);
+        }
+      </script>
     </section>
     <section
       id="whatever-this-is"
@@ -701,7 +715,7 @@ const xFollowers = 4100;
           <LargeFeatureGridItem
             title="Best in class performance"
             subtitle="Efficiency"
-            description="Supermemory delivers stronger precision and recall at every benchmark. And it’s ridiculously easy to start."
+            description="Supermemory delivers stronger precision and recall at every benchmark. And it's ridiculously easy to start."
             imageSrc={featureGridIcon5.src}
             imageAlt="Best in class performance"
             graphLabel={`comparison of evaluation metrics:<br> <span class="text-gradient">supermemory</span> vs major memory provider`}
